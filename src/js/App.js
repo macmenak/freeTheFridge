@@ -37,7 +37,7 @@ class App extends Component {
             <Container>
               <Link to="/">
                 <Menu.Item header>
-                    <Icon name='food' size='large'/> freeTheFridge
+                  <Icon name='food' size='large'/> freeTheFridge
                 </Menu.Item>
               </Link>
             </Container>

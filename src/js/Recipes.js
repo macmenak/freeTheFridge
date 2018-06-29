@@ -27,8 +27,8 @@ class Recipes extends Component {
             ingredients: ingredients.split(','),
             loading: true
         });
-        const apiUrl = `http://www.recipepuppy.com/api/?i=${ingredients}`;
-        console.log(apiUrl);
+        const apiUrl = `http://www.recipepuppy.com/api/?i=${ingredients.replace(' ', '+')}`;
+        
         fetch(apiUrl)
           .then(res => res.json())
           .then(data => {

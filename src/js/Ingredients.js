@@ -8,9 +8,6 @@ import IngredientsList from './IngredientsList';
 import IngredientsAdder from './IngredientsAdder';
 
 
-
-
-
   
   class Ingredients extends Component {
     constructor(props) {

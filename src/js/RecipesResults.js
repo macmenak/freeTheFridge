@@ -36,20 +36,21 @@ class RecipesResults extends Component {
             getArrayUniqueValues(recipe.ingredients.split(', ')).forEach(ingredient => {
                 if (selectedIngredients.indexOf(ingredient)<0) notStrictIngredients = true;
             });
-            if (!(strictResults && notStrictIngredients)) return recipe;
+            return !(strictResults && notStrictIngredients);
         });        
         
         return (results && results.length<=0) ? placeholder : (
             <div>
                 <Header as='h2'>Found recipes</Header>
-                <Item.Group divided>
+                <Item.Group divided relaxed>
                     {results.map(recipe => 
                     {
-                    
                     const thumbnail = recipe.thumbnail.length>0 ? <Item.Image size='small'  as='a' href={recipe.href} style={{backgroundImage: `url(${recipe.thumbnail})`, backgroundSize: 'cover', display: 'block', width: '150px', height: '150px' }} /> : <Item.Image size='small' ><Segment disabled textAlign='center' style={{height: '150px', paddingTop: '2em'}}><Icon name='image' size='huge' /> <p>photo not available</p></Segment></Item.Image>;
                     
                     return (
-                            <Item key={recipe.href}>
+                        
+                            <Item key={recipe.href} >
+                                
                                 {thumbnail}
                                 <Item.Content verticalAlign='middle'>
                                     <Item.Header as='a' href={recipe.href}>{recipe.title}</Item.Header>
@@ -57,18 +58,20 @@ class RecipesResults extends Component {
                                         <p><Icon name='tag' /> Ingredients:</p>
                                         <Label.Group>
                                             {getArrayUniqueValues(recipe.ingredients.split(', ')).map(ingredient => (
-                                            selectedIngredients.indexOf(ingredient)>=0 ? <Label key={ingredient}>{ingredient}</Label> : <Label key={ingredient} basic color='blue'>{ingredient}</Label>
+                                            selectedIngredients.indexOf(ingredient)>=0 ? <Label key={ingredient}>{ingredient}</Label> : <Label key={ingredient} basic >{ingredient}</Label>
                                             ))}
                                         </Label.Group>
                                     </Item.Meta>
                                     <Item.Extra>
-                                        <Button primary basic floated='right' href={recipe.href}>
-                                            Go to recipe's site
-                                            <Icon name='right chevron' />
+                                        <Button primary floated='right' href={recipe.href} target='_blank' >
+                                        <Icon name='external' /> View recipe
+                                            
                                         </Button>
                                     </Item.Extra>
                                 </Item.Content>
+                                
                             </Item>
+                            
                         )
                     })}
                 </Item.Group>
