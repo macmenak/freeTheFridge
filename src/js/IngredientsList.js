@@ -20,9 +20,12 @@ class IngredientsList extends Component {
         const {ingredients} = this.props;
         const disabled = Array.from(ingredients).length===0;
         return (
-            
-        
-            <Segment>
+            <Segment raised>
+                <Link to={!disabled ? `/recipes/${Array.from(ingredients).join(",")}` : ""} style={{color: "#ffffff"}}>
+                    <Button primary fluid size='large' icon='right arrow' labelPosition='right' content='Find recipes'
+                    disabled={disabled} />
+                </Link>
+                <Divider  />
                 <Header as='h2'>
                     <Header.Content>Selected ingredients</Header.Content>
                 </Header>
@@ -38,11 +41,9 @@ class IngredientsList extends Component {
                     ))}
                 </List>
                 
-                <Divider  />
-                <Link to={!disabled ? `/recipes/${Array.from(ingredients).join(",")}` : ""} style={{color: "#ffffff"}}>
-                    <Button primary fluid size='large' icon='right arrow' labelPosition='right' content='Find recipes'
-                    disabled={disabled} />
-                </Link>
+                
+                
+                
                 
                 
             </Segment>

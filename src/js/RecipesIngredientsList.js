@@ -19,7 +19,7 @@ class RecipesIngredientsList extends Component {
     render() {
         const {ingredients} = this.props;
         return (
-        <Segment >
+        <Segment raised>
             <Link to="/" style={{color: "#ffffff"}}>
                 <Button fluid size='large' icon='left arrow' labelPosition='left' content='Change ingredients' /> 
             </Link>

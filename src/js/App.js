@@ -43,9 +43,9 @@ class App extends Component {
             </Container>
           </Menu>
           <Container fluid style={{backgroundColor: '#2c2121', backgroundImage: `url(${headerBackground})`, backgroundSize: 'cover', backgroundPositionY: 'top'}}>
-            <Container fluid textAlign='center' style={{ padding: '9em 0 7em 0', backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
+            <Segment basic textAlign='center' style={{ padding: '9em 0 7em 0', backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
               <Header inverted as='h1'>Find recipes for the food that's left in your fridge</Header>
-            </Container>
+            </Segment>
           </Container>
           <Container style={{minHeight: '250px', padding: '2em 0' }}>
             <Switch>

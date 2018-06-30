@@ -15,6 +15,7 @@ import IngredientsAdder from './IngredientsAdder';
       this.state = {
         ingredients: new Set(),
         inputIngredient: '',
+        inputIngredientError: false,
         suggestions: [],
         recipes: []
       }
@@ -34,13 +35,22 @@ import IngredientsAdder from './IngredientsAdder';
     }
     
     addIngredient (ingredient=this.state.inputIngredient) {
-      this.setState({
-        ingredients: this.state.ingredients.add(ingredient),
-        inputIngredient: '',
-        suggestions: []
-      }, ()=> {
-        localStorage.setItem("ingredients", JSON.stringify({ingridients: Array.from(this.state.ingredients)}));
-      });
+      if (ingredient && ingredient.trim()){
+        this.setState({
+          ingredients: this.state.ingredients.add(ingredient),
+          inputIngredient: '',
+          suggestions: []
+        }, ()=> {
+          localStorage.setItem("ingredients", JSON.stringify({ingridients: Array.from(this.state.ingredients)}));
+        });
+        this.setState({
+          inputIngredientError: false
+        })
+      } else {
+        this.setState({
+          inputIngredientError: true
+        })
+      }
     }
 
 
@@ -98,23 +108,20 @@ import IngredientsAdder from './IngredientsAdder';
                 <Grid.Column width={11}>
                     <IngredientsAdder 
                         ingredients={this.state.ingredients} 
-                        inputIngredient={this.state.inputIngredient} 
+                        inputIngredient={this.state.inputIngredient}
+                        inputIngredientError={this.state.inputIngredientError}
                         changeHandler={this.inputChangeHandler} 
                         addIngredient={this.addIngredient}
                         suggestions={this.state.suggestions}
                     />
                 </Grid.Column>
             <Grid.Column width={5}>
-                
                 <IngredientsList 
                 ingredients={this.state.ingredients}
                 removeIngredient={this.removeIngredient}
                 findRecipies={this.findRecipies}
                 />
-                
-                
             </Grid.Column>
-            
           </Grid.Row>
         </Grid>
         

@@ -8,36 +8,30 @@ import {
   Item,
   Label,
   Loader,
-  Container
+  Divider
 } from 'semantic-ui-react';
 
 
 const NoResults = () => (
-    <Container text textAlign='center'>
+    <Segment basic textAlign='center'>
         <Icon name='search' size='huge' color='grey'/>
         <Header as='h2'>Sorry... we haven't found any recipes.</Header>
-    </Container>
+        <p>Try removing some ingredients or adding more if you added only 1 or check the "recipes with ingredients not on the list" option.</p>
+    </Segment>
 )
 
 class RecipesResults extends Component {
     
 
     render() {
-        const {recipes, loading, ingredients, strictResults} = this.props;
+        const {results, loading, ingredients} = this.props;
         const placeholder = loading ? <Loader active={loading} inline='centered'>Loading </Loader> : <NoResults/>;
         const selectedIngredients = Array.from(ingredients);
         function getArrayUniqueValues(array) {
             const set = new Set(array);
             return Array.from(set);
         }
-        let results = [];
-        results = recipes.filter(recipe => {
-            let notStrictIngredients = false;
-            getArrayUniqueValues(recipe.ingredients.split(', ')).forEach(ingredient => {
-                if (selectedIngredients.indexOf(ingredient)<0) notStrictIngredients = true;
-            });
-            return !(strictResults && notStrictIngredients);
-        });        
+        
         
         return (results && results.length<=0) ? placeholder : (
             <div>
@@ -45,7 +39,7 @@ class RecipesResults extends Component {
                 <Item.Group divided relaxed>
                     {results.map(recipe => 
                     {
-                    const thumbnail = recipe.thumbnail.length>0 ? <Item.Image size='small'  as='a' href={recipe.href} style={{backgroundImage: `url(${recipe.thumbnail})`, backgroundSize: 'cover', display: 'block', width: '150px', height: '150px' }} /> : <Item.Image size='small' ><Segment disabled textAlign='center' style={{height: '150px', paddingTop: '2em'}}><Icon name='image' size='huge' /> <p>photo not available</p></Segment></Item.Image>;
+                    const thumbnail = recipe.thumbnail.length>0 ? <Segment basic as='a' href={recipe.href} style={{backgroundImage: `url(${recipe.thumbnail})`, backgroundSize: 'cover', display: 'block', width: '150px', minWidth: '150px', height: '150px', marginRight: '15px' }} /> : <Segment as='a' href={recipe.href} disabled textAlign='center' style={{width: '150px', minWidth: '150px', height: '150px', marginRight: '15px', paddingTop: '2em'}}><Icon name='image' size='huge' /> <p>photo not available</p></Segment>;
                     
                     return (
                         
@@ -75,6 +69,10 @@ class RecipesResults extends Component {
                         )
                     })}
                 </Item.Group>
+                <Divider />
+                <Button fluid onClick={this.props.getResults} content='Load more' icon='chevron down' loading={loading}/>
+                
+                
             </div>
         );
     }
