@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../css/App.css';
 import {
-    HashRouter as Router,
+    BrowserRouter as Router,
     Link,
     Route,
     Switch,

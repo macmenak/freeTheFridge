@@ -27,6 +27,10 @@ class Recipes extends Component {
     }
 
     getResults() {
+        function getArrayUniqueValues(array) {
+            const set = new Set(array);
+            return Array.from(set);
+        }
         const {ingredients} = this.props.match.params;
         const {resultsPage} = this.state;
         this.setState({
@@ -38,8 +42,19 @@ class Recipes extends Component {
             .then(res => res.json())
             .then(data => {
                 if (data && data.results){
+                    const selectedIngredients = this.state.ingredients;
+                    
+                    const newRecipes = data.results.map(recipe => {
+                        const recipeIngredients = getArrayUniqueValues(recipe.ingredients.split(', '));
+                        const fittingIngredients = selectedIngredients.filter(ingredient => recipeIngredients.includes(ingredient));
+                        const fit = fittingIngredients.length / recipeIngredients.length * 100;
+                        return {
+                            ...recipe,
+                            fit
+                        };
+                    });
                     this.setState({
-                        recipes: [...this.state.recipes, ...data.results],
+                        recipes: [...this.state.recipes, ...newRecipes],
                         loading: false,
                         resultsPage: resultsPage + 1
                     })
