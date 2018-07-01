@@ -16,10 +16,12 @@ class Recipes extends Component {
             recipes: [],
             resultsPage: 1,
             ingredients: [],
-            strictResults: false
+            strictResults: false,
+            bestMatchFirst: true
         };
         this.getResults = this.getResults.bind(this);
         this.toggleStrictResults = this.toggleStrictResults.bind(this);
+        this.toggleBestMatch = this.toggleBestMatch.bind(this);
     }
     
     componentDidMount() {
@@ -73,18 +75,31 @@ class Recipes extends Component {
         })
     }
 
+    toggleBestMatch () {
+        this.setState({
+            bestMatchFirst: !this.state.bestMatchFirst
+        })
+    }
+
+
     filterResults () {
-        return this.state.recipes.filter(recipe => {
+        
+        let recipes = [...this.state.recipes];
+        recipes = this.state.bestMatchFirst ? recipes.sort((a,b)=>{return b.fit - a.fit}) : this.state.recipes;
+        
+        return recipes.filter(recipe => {
             const recipeIngredients = recipe.ingredients.split(', ');
             const selectedIngredients = this.state.ingredients;
             const filterFunction = (ingridient) => selectedIngredients.includes(ingridient);
+            
             return this.state.strictResults ? recipeIngredients.every(filterFunction) : recipeIngredients.some(filterFunction);
         });
     }
+    
 
     handleContextRef = contextRef => this.setState({ contextRef })
 
-    handleOnUpdate = (e, { width }) => {this.setState({ width }); console.log("feuer")}
+    handleOnUpdate = (e, { width }) => {this.setState({ width });}
 
     render() {
         const { width } = this.state;
@@ -112,6 +127,7 @@ class Recipes extends Component {
                         <RecipesIngredientsList 
                             ingredients={this.state.ingredients}
                             toggleStrictResults={this.toggleStrictResults}
+                            toggleBestMatch={this.toggleBestMatch}
                             isSticky={isSticky}
                         />
                     </Sticky>

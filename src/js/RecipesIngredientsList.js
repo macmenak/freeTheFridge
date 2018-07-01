@@ -43,6 +43,8 @@ class RecipesIngredientsList extends Component {
             </List>
             <Divider />
             <Checkbox onChange={this.props.toggleStrictResults} toggle defaultChecked label='recipes with ingredients not on the list'/>
+            <Divider hidden />
+            <Checkbox onChange={this.props.toggleBestMatch} toggle defaultChecked label='show most matching ingredients first'/>
         </Segment>
       );
     }
