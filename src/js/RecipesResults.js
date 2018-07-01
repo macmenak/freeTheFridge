@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import '../css/App.css';
 import {
-  Segment,
-  Button,
-  Header,
-  Icon,
-  Item,
-  Label,
-  Loader,
-  Divider
+    Button,
+    Divider,
+    Header,
+    Icon,
+    Item,
+    Label,
+    Loader,
+    Segment,
 } from 'semantic-ui-react';
 
 
@@ -21,7 +21,6 @@ const NoResults = () => (
 )
 
 class RecipesResults extends Component {
-    
 
     render() {
         const {results, loading, ingredients} = this.props;
@@ -32,13 +31,11 @@ class RecipesResults extends Component {
             return Array.from(set);
         }
         
-        
         return (results && results.length<=0) ? placeholder : (
             <div>
                 <Header as='h2'>Found recipes</Header>
                 <Item.Group divided relaxed>
-                    {results.map(recipe => 
-                    {
+                    {results.map(recipe => {
                     const thumbnail = recipe.thumbnail.length>0 ? <Segment basic as='a' href={recipe.href} style={{backgroundImage: `url(${recipe.thumbnail})`, backgroundSize: 'cover', display: 'block', width: '150px', minWidth: '150px', height: '150px', marginRight: '15px' }} /> : <Segment as='a' href={recipe.href} disabled textAlign='center' style={{width: '150px', minWidth: '150px', height: '150px', marginRight: '15px', paddingTop: '2em'}}><Icon name='image' size='huge' /> <p>photo not available</p></Segment>;
                     
                     return (
@@ -65,18 +62,14 @@ class RecipesResults extends Component {
                                 </Item.Content>
                                 
                             </Item>
-                            
                         )
                     })}
                 </Item.Group>
                 <Divider />
                 <Button fluid onClick={this.props.getResults} content='Load more' icon='chevron down' loading={loading}/>
-                
-                
             </div>
         );
     }
-    
 }
 
 export default RecipesResults

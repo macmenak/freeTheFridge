@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import '../css/App.css';
 import {
-  Grid,
-  Sticky,
-  Responsive
+    Grid,
+    Responsive,
+    Sticky,
 } from 'semantic-ui-react';
-
 
 import RecipesResults from './RecipesResults';
 import RecipesIngredientsList from './RecipesIngredientsList';
-
 
 class Recipes extends Component {
     constructor(props) {
@@ -19,7 +17,7 @@ class Recipes extends Component {
             resultsPage: 1,
             ingredients: [],
             strictResults: false
-        }
+        };
         this.getResults = this.getResults.bind(this);
         this.toggleStrictResults = this.toggleStrictResults.bind(this);
     }
@@ -27,10 +25,6 @@ class Recipes extends Component {
     componentDidMount() {
         this.getResults(1);
     }
-
-    
-
-    
 
     getResults() {
         const {ingredients} = this.props.match.params;
@@ -70,12 +64,6 @@ class Recipes extends Component {
             const selectedIngredients = this.state.ingredients;
             const filterFunction = (ingridient) => selectedIngredients.includes(ingridient);
             return this.state.strictResults ? recipeIngredients.every(filterFunction) : recipeIngredients.some(filterFunction);
-            // return recipe.ingredients.split(', ').some((ingridient) => selectedIngredients.includes(ingridient));
-            // let notStrictIngredients = false;
-            // getArrayUniqueValues(recipe.ingredients.split(', ')).forEach(ingredient => {
-            //     if (selectedIngredients.indexOf(ingredient)<0) notStrictIngredients = true;
-            // });
-            // return !(strictResults && notStrictIngredients);
         });
     }
 
@@ -113,12 +101,10 @@ class Recipes extends Component {
                         />
                     </Sticky>
                 </Grid.Column>
-                
             </Grid.Row>
         </Responsive>
         );
     }
-    
 }
 
 export default Recipes
